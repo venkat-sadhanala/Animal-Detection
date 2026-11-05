@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animal Detection</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+        img {
+            width: 300px;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        .card {
+            background: white;
+            display: inline-block;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<h1>🐾 Animal Detection Feed</h1>
+
+<div id="gallery"></div>
+
+<script>
+function loadImages() {
+    fetch("images.json")
+    .then(res => res.json())
+    .then(data => {
+        const gallery = document.getElementById("gallery");
+        gallery.innerHTML = "";
+
+        data.slice().reverse().forEach(item => {
+            const div = document.createElement("div");
+            div.className = "card";
+
+            div.innerHTML = `
+                <img src="${item.url}">
+                <p>${item.time}</p>
+            `;
+
+            gallery.appendChild(div);
+        });
+    });
+}
+
+// Load initially
+loadImages();
+
+// 🔥 Auto refresh every 5 seconds
+setInterval(loadImages, 5000);
+</script>
+
+</body>
+</html>
